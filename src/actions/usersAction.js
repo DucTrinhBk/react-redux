@@ -1,4 +1,4 @@
-import {KEYAPI,FETCH_DATA} from '../utilities/config';
+import {KEYAPI,FETCH_DATAS,ERROR} from '../utilities/config';
 const getDatas = ()=>dispatch =>{
     fetch('https://gorest.co.in/public-api/users',{
         method: 'GET',
@@ -13,10 +13,16 @@ const getDatas = ()=>dispatch =>{
         {
             if(data._meta.success){
                 dispatch({
-                        type: FETCH_DATA,
+                        type: FETCH_DATAS,
                         payload: data.result
                     }
                 )
+            }else{
+                dispatch({
+                    type: ERROR,
+                    message: data.result.message
+                }
+            )
             }
         })
 }

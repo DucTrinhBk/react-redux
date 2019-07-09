@@ -1,14 +1,22 @@
-import {FETCH_DATA} from '../utilities/config';
-const userReducer = (state = {users:[]},action)=>
+import {FETCH_DATAS,SUCCESS,ERROR,NO_RESULT} from '../utilities/config';
+const usersReducer = (state = {users:[]},action)=>
 {
     switch(action.type)
     {
-        case FETCH_DATA:
+        case FETCH_DATAS:
+            let n = action.payload.length;
             return {
-                users : action.payload
+                type: n >0? SUCCESS:NO_RESULT,
+                data : action.payload,
+                message:n > 0?'data was loaded successfully': 'No data was found'
+            }
+        case ERROR:
+            return {
+                type: ERROR,
+                message: action.message
             }
         default:
             return state;
     }
 }
-export default userReducer;
+export default usersReducer;
